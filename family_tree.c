@@ -2,10 +2,9 @@
 #include<stdlib.h>
 #include<string.h>
 
-
 typedef struct Person {
 char name[50];
-int age;
+int age;    
 struct Person *father;
 struct Person *mother;
 } Person;
@@ -13,22 +12,54 @@ struct Person *mother;
 Person* create_person(const char*name, int age) {
     Person *new_person = (Person*)malloc(sizeof(Person));
     if (new_person == NULL){
-        printf("err\n");
+        printf("err");
     }
     strcpy(new_person->name, name);
-    new_person->age = age;
-    new_person->father = NULL;
-    new_person->mother = NULL;
+    new_person->age =age;
+    new_person->father= NULL;
+    new_person->mother= NULL;
     return new_person;
 }
 
+void read_person_info(const char*role, char*name_out, int *age_out ){
+    printf("enter name of %s",role);
+    fgets(name_out,50,stdin);
+    int len =strlen(name_out);
+    if(name_out[len-1] =='\n'){
+        name_out[len-1] = '\0';
+    }
+    printf("enter age of %s", role);
+    scanf("%d", age_out);
+    getchar();
+}
+
 int main(void){
-    Person *test_person = create_person("sid",19);
-    printf("name %s",test_person->name);
-    printf("age %d",test_person->age);
-    printf("father ptr%p", (void *)test_person->father);
-    printf("mother ptr %p",(void*)test_person->mother);
-    free(test_person);
-    test_person = NULL;
-    return(0);
+    char name[50];
+    int age;
+    Person*family[7];
+    const char *roles[7]={
+        "pgf",
+        "pgm",
+        "mgf",
+        "mgm",
+        "f",
+        "m",
+        "me",
+    };
+
+    for (int i=0; i<7; i++){
+        read_person_info(roles[i], name, &age);
+        family[i] = create_person(name,age);
+    }
+
+    for (int i = 0; i < 7; i++) {
+        printf("%s %s %d %p\n",
+               roles[i],family[i]->name,family[i]->age, (void*)family[i]);
+    }
+
+    for (int i = 0; i <7; i++) {
+        free(family[i]);
+        family[i] = NULL;
+    }
+    return 0;
 }
