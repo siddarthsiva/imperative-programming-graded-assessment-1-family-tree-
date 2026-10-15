@@ -4,7 +4,7 @@
 
 typedef struct Person {
 char name[50];
-int age;    
+int age;
 struct Person *father;
 struct Person *mother;
 } Person;
@@ -33,33 +33,49 @@ void read_person_info(const char*role, char*name_out, int *age_out ){
     getchar();
 }
 
-int main(void){
+void link_parents(Person*child,Person*father,Person*mother){
+    if (child != NULL){
+        child->father=father;
+        child->mother=mother;
+    }
+}
+
+void print_family_relationships(const Person*me){
+    printf("me %s age %d\n",me->name,me->age);
+    printf("father %s, age %d\n",me->father->name,me->father->age);
+    printf("mother %s, age %d\n",me->mother->name,me->mother->age);
+    printf("paternal grandffather %s, age %d\n",me->father->father->name,me->father->father->age);
+    printf("paternal grandmother%s, age %d\n",me->father->mother->name,me->father->mother->age);
+    printf("maternal grandffather %s, age %d\n",me->mother->father->name,me->mother->father->age);
+    printf("maternal grandmother %s, age %d\n",me->mother->mother->name,me->mother->mother->age);
+}
+
+int main(void) {
     char name[50];
     int age;
-    Person*family[7];
-    const char *roles[7]={
-        "pgf",
-        "pgm",
-        "mgf",
-        "mgm",
-        "f",
-        "m",
-        "me",
-    };
+    read_person_info("paternal grandfather",name,&age);
+    Person*patgf =create_person(name,age);
 
-    for (int i=0; i<7; i++){
-        read_person_info(roles[i], name, &age);
-        family[i] = create_person(name,age);
-    }
+    read_person_info("paternal grandmother",name,&age);
+    Person*patgm =create_person(name,age);
 
-    for (int i = 0; i < 7; i++) {
-        printf("%s %s %d %p\n",
-               roles[i],family[i]->name,family[i]->age, (void*)family[i]);
-    }
+    read_person_info("maternal grandfather",name,&age);
+    Person*matgf =create_person(name,age);
 
-    for (int i = 0; i <7; i++) {
-        free(family[i]);
-        family[i] = NULL;
-    }
-    return 0;
+    read_person_info("maternal grandmother",name,&age);
+    Person*matgm =create_person(name,age);
+
+    read_person_info("father",name,&age);
+    Person*father =create_person(name,age);
+
+    read_person_info("mother",name,&age);
+    Person*mother =create_person(name,age);
+
+    read_person_info("me",name,&age);
+    Person*me =create_person(name,age);
+
+    link_parents(father,patgf,patgm);
+    link_parents(mother,matgf,matgm);
+    link_parents(me,father,mother);
+    print_family_relationships(me);
 }
