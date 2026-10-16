@@ -50,6 +50,14 @@ void print_family_relationships(const Person*me){
     printf("maternal grandmother %s, age %d\n",me->mother->mother->name,me->mother->mother->age);
 }
 
+void free_family_tree(Person*people[],int count){
+    for (int i = 0; i < count; i++){
+        if (people[i] != NULL){
+            free(people[i]);
+            people[i] = NULL;
+        }
+    }
+}
 int main(void) {
     char name[50];
     int age;
@@ -78,4 +86,14 @@ int main(void) {
     link_parents(mother,matgf,matgm);
     link_parents(me,father,mother);
     print_family_relationships(me);
+    Person*people[7]={
+        patgf,
+        patgm,
+        matgf,
+        matgm,
+        father,
+        mother,
+        me
+    };
+    free_family_tree(people, 7);
 }

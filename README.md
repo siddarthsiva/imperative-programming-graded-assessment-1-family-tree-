@@ -49,3 +49,26 @@ paternal grandffather w, age 2
 paternal grandmotherw, age 2
 maternal grandffather w, age 2
 maternal grandmother w, age 2
+
+Milestone 4:
+enter name of paternal grandfatherf
+enter age of paternal grandfather3
+enter name of paternal grandmotherf
+enter age of paternal grandmother3
+enter name of maternal grandfatherf
+enter age of maternal grandfather3
+enter name of maternal grandmotherf
+enter age of maternal grandmother3
+enter name of fatherf
+enter age of father3
+enter name of motherf
+enter age of mother3
+enter name of mef
+enter age of me3
+me f age 3
+father f, age 3
+mother f, age 3
+paternal grandffather f, age 3
+paternal grandmotherf, age 3
+maternal grandffather f, age 3
+maternal grandmother f, age 3
